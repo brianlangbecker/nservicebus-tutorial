@@ -62,7 +62,7 @@ namespace Sales
                         .AddOtlpExporter(option =>
                         {
                             option.Endpoint = new Uri("https://api.honeycomb.io/v1/traces");
-                            option.Headers = "x-honeycomb-team=X2ojNtHwCSbLqoT6cudreH";
+                            option.Headers = "x-honeycomb-team=Your Key";
                             option.Protocol = OtlpExportProtocol.HttpProtobuf;
                         })
                         .SetResourceBuilder(
