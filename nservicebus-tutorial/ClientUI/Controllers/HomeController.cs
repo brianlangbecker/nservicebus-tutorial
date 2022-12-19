@@ -36,37 +36,21 @@ namespace ClientUI.Controllers
 
         static class CustomActivitySources
         {
-            public const string Name = "Sample.ActivitySource";
+            public const string Name = "Example.ClientUI";
             public static ActivitySource Main = new ActivitySource(Name);
         }
 
         [HttpPost]
         public async Task<ActionResult> PlaceOrder()
         {
-            // var serviceName = "ClientUI";
-            // var serviceVersion = "1.0.0";
-
-            // var tracerProvider = Sdk.CreateTracerProviderBuilder()
-            //     .AddOtlpExporter(option =>
-            //     {
-            //         option.Endpoint = new Uri("https://api.honeycomb.io/v1/traces");
-            //         option.Headers = "x-honeycomb-team=X2ojNtHwCSbLqoT6cudreH";
-            //         option.Protocol = OtlpExportProtocol.HttpProtobuf;
-            //     })
-            //     .SetResourceBuilder(
-            //         ResourceBuilder
-            //             .CreateDefault()
-            //             .AddService(serviceName: serviceName, serviceVersion: serviceVersion)
-            //     )
-            //     .AddSource("NServiceBus.core")
-            //     .AddSource(CustomActivitySources.Name)
-            //     .Build();
-
             string orderId = Guid.NewGuid().ToString().Substring(0, 8);
 
             var command = new PlaceOrder { OrderId = orderId };
             using (var activity = CustomActivitySources.Main.StartActivity("SendOrder"))
             {
+                // Example of adding a customer attribute to a OTel span
+                activity?.SetTag("orderId", orderId);
+
                 // Send the command
                 await _messageSession.Send(command).ConfigureAwait(false);
 

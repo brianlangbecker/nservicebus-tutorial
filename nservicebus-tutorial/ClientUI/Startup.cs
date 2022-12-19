@@ -27,7 +27,7 @@ namespace ClientUI
 
         static class CustomActivitySources
         {
-            public const string Name = "Sample.ActivitySource";
+            public const string Name = "Example.ClientUI";
             public static ActivitySource Main = new ActivitySource(Name);
         }
 

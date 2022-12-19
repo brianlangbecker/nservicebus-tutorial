@@ -20,7 +20,7 @@ namespace Billing
 
         static class CustomActivitySources
         {
-            public const string Name = "Sample.ActivitySource";
+            public const string Name = "Example.Billing";
             public static ActivitySource Main = new ActivitySource(Name);
         }
 
@@ -36,16 +36,18 @@ namespace Billing
 
                     endpointConfiguration.UseTransport<LearningTransport>();
 
-                    endpointConfiguration.SendFailedMessagesTo("error");
-                    endpointConfiguration.AuditProcessedMessagesTo("audit");
-                    endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
+                    // Uncomment if you want to do these
+                    // endpointConfiguration.SendFailedMessagesTo("error");
+                    // endpointConfiguration.AuditProcessedMessagesTo("audit");
+                    // endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
 
-                    var metrics = endpointConfiguration.EnableMetrics();
-                    metrics.SendMetricDataToServiceControl(
-                        "Particular.Monitoring",
-                        TimeSpan.FromMilliseconds(500)
-                    );
+                    // var metrics = endpointConfiguration.EnableMetrics();
+                    // metrics.SendMetricDataToServiceControl(
+                    // 	"Particular.Monitoring",
+                    // 	TimeSpan.FromMilliseconds(500)
+                    // );
 
+                    // This is required to turn on OTel for NServiceBus.Core
                     endpointConfiguration.EnableOpenTelemetry();
 
                     var tracerProvider = Sdk.CreateTracerProviderBuilder()

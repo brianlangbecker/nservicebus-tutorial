@@ -20,7 +20,7 @@ namespace Sales
 
         static class CustomActivitySources
         {
-            public const string Name = "Sample.ActivitySource";
+            public const string Name = "Example.SalesProcess";
             public static ActivitySource Main = new ActivitySource(Name);
         }
 
@@ -33,9 +33,10 @@ namespace Sales
 
                     endpointConfiguration.UseTransport<LearningTransport>();
 
-                    endpointConfiguration.SendFailedMessagesTo("error");
-                    endpointConfiguration.AuditProcessedMessagesTo("audit");
-                    endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
+                    // Uncomment if you want to use these
+                    // endpointConfiguration.SendFailedMessagesTo("error");
+                    //endpointConfiguration.AuditProcessedMessagesTo("audit");
+                    //endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
 
                     // So that when we test recoverability, we don't have to wait so long
                     // for the failed message to be sent to the error queue
@@ -45,12 +46,13 @@ namespace Sales
                         delayed.TimeIncrease(TimeSpan.FromSeconds(2));
                     });
 
-                    var metrics = endpointConfiguration.EnableMetrics();
-                    metrics.SendMetricDataToServiceControl(
-                        "Particular.Monitoring",
-                        TimeSpan.FromMilliseconds(500)
-                    );
+                    // var metrics = endpointConfiguration.EnableMetrics();
+                    // metrics.SendMetricDataToServiceControl(
+                    // 	"Particular.Monitoring",
+                    // 	TimeSpan.FromMilliseconds(500)
+                    // );
 
+                    // Must have to Nservicebus.core hooks into activities and creates spans
                     endpointConfiguration.EnableOpenTelemetry();
 
                     var serviceName = "SalesProcess";

@@ -17,7 +17,7 @@ namespace Billing
 
         static class CustomActivitySources
         {
-            public const string Name = "Sample.ActivitySource";
+            public const string Name = "Example.Billing";
             public static ActivitySource Main = new ActivitySource(Name);
         }
 
@@ -25,6 +25,7 @@ namespace Billing
         {
             using (var activity = CustomActivitySources.Main.StartActivity("BillOrder"))
             {
+                activity?.SetTag("orderId", message.OrderId);
                 log.Info($"Billing has received OrderPlaced, OrderId = {message.OrderId}");
                 return Task.CompletedTask;
             }

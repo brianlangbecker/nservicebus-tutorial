@@ -26,16 +26,18 @@ namespace ClientUI
                     var routing = transport.Routing();
                     routing.RouteToEndpoint(typeof(PlaceOrder), "Sales");
 
-                    endpointConfiguration.SendFailedMessagesTo("error");
-                    endpointConfiguration.AuditProcessedMessagesTo("audit");
-                    endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
+                    // Uncommeent if you want to use
+                    // endpointConfiguration.SendFailedMessagesTo("error");
+                    // endpointConfiguration.AuditProcessedMessagesTo("audit");
+                    // endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
 
-                    var metrics = endpointConfiguration.EnableMetrics();
-                    metrics.SendMetricDataToServiceControl(
-                        "Particular.Monitoring",
-                        TimeSpan.FromMilliseconds(500)
-                    );
+                    // var metrics = endpointConfiguration.EnableMetrics();
+                    // metrics.SendMetricDataToServiceControl(
+                    //     "Particular.Monitoring",
+                    //     TimeSpan.FromMilliseconds(500)
+                    // );
 
+                    // Required to turn on OTel in NserviceBus.Core
                     endpointConfiguration.EnableOpenTelemetry();
                     return endpointConfiguration;
                 })
